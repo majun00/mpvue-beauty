@@ -1,7 +1,7 @@
 {
   "pages": [
     "pages/beautyList/main",
-    "pages/upload/main"
+    "pages/list/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
