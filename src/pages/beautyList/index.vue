@@ -8,7 +8,7 @@
       <div @click='onItemClick(item.url)'>
         <image
           class="image"
-          mode="aspectFill"
+          mode="widthFix"
           :src="item.url"
         />
         <div class="title">{{item.title}}</div>
@@ -48,11 +48,17 @@ export default {
         icon: 'loading'
       });
 
-
       let itemList = []
       for (let index = (targetPage - 1) * 10; index < (targetPage * 10); index++) {
-        itemList.push({ url: `http://47.110.44.176/static/b${index}.jpg`, desc: '', who: '', time: '', title: '' });
+        that.items.push({ url: `http://47.110.44.176/static/b${index}.jpg`, desc: '', who: '', time: '', title: '' });
+        that.mUrl.push(`http://47.110.44.176/static/b${index}.jpg`);
       }
+      that.mCurrentPage = targetPage;
+      if (targetPage < 6) {
+        return
+      }
+
+      targetPage = targetPage - 6
 
       wx.request({
         url: Constant.GET_MEIZHI_URL + targetPage,
@@ -71,7 +77,7 @@ export default {
             that.bindData(res.data.results[i]);
           }
 
-        //   var itemList = [];
+          var itemList = [];
           for (var i = 0; i < that.mUrl.length; i++) {
             itemList.push({ url: that.mUrl[i], desc: that.mDesc[i], who: that.mWho[i], time: that.mTimes[i], title: that.mTitles[i] });
           }
@@ -129,7 +135,7 @@ export default {
 
 .image {
   width: 100%;
-  height: 240px;
+  /* height: 240px; */
 }
 
 .title {
