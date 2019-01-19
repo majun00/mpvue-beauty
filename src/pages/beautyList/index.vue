@@ -48,20 +48,21 @@ export default {
         icon: 'loading'
       });
 
-      let itemList = []
-      for (let index = (targetPage - 1) * 10; index < (targetPage * 10); index++) {
-        that.items.push({ url: `http://47.110.44.176/static/b${index}.jpg`, desc: '', who: '', time: '', title: '' });
-        that.mUrl.push(`http://47.110.44.176/static/b${index}.jpg`);
-      }
-      that.mCurrentPage = targetPage;
-      if (targetPage < 6) {
+      console.log('targetPage', targetPage, that.items)
+      const beforePage = 7
+
+      if (targetPage <= beforePage) {
+        let itemList = []
+        for (let index = (targetPage - 1) * 10; index < (targetPage * 10); index++) {
+          that.items.push({ url: `http://47.110.44.176/static/b${index}.jpg`, desc: '', who: '', time: '', title: '' });
+          that.mUrl.push(`http://47.110.44.176/static/b${index}.jpg`);
+        }
+        that.mCurrentPage = targetPage;
         return
       }
 
-      targetPage = targetPage - 6
-
       wx.request({
-        url: Constant.GET_MEIZHI_URL + targetPage,
+        url: Constant.GET_MEIZHI_URL + (targetPage - beforePage),
         header: {
           "Content-Type": "application/json"
         },
